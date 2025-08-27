@@ -4,66 +4,97 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Missaghju</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Missaghju</h1>
-  <form id="messageForm">
-    <!-- Heure et rôle -->
-    <fieldset>
-      <legend>Heure et rôle</legend>
-      <input type="number" id="heure" placeholder="Heures" min="0" max="23">
-      <input type="number" id="minute" placeholder="Minutes" min="0" max="59">
-      <button type="button" onclick="setCurrentTime()">Actualiser l'heure</button>
-      <select id="role">
-        <option>Émetteur</option>
-        <option>Récepteur</option>
-      </select>
-    </fieldset>
+  <header>
+    <h1>Missaghju</h1>
+  </header>
 
-    <!-- Émetteur -->
-    <fieldset>
-      <legend>Émetteur</legend>
-      <input type="text" id="numEmetteur" placeholder="Numéro">
-      <button type="button" onclick="generateNumber()">Générer numéro</button>
-      <input type="text" id="nomEmetteur" placeholder="Nom">
-      <select id="fonctionEmetteur" onchange="updateService('Emetteur')">
-        <option>CDC</option><option>CDT</option><option>CDC-CDR</option>
-        <option>PDM</option><option>PDA</option><option>PDE</option><option>PDS</option>
+  <main>
+    <!-- Sélecteur du rôle -->
+    <div class="field">
+      <label for="roleSelect">Rôle</label>
+      <select id="roleSelect">
+        <option value="EMETTEUR" selected>ÉMETTEUR</option>
+        <option value="RECEPTEUR">RÉCEPTEUR</option>
       </select>
-      <input type="text" id="serviceEmetteur" placeholder="Entité">
-    </fieldset>
+    </div>
 
-    <!-- Récepteur -->
-    <fieldset>
-      <legend>Récepteur</legend>
-      <input type="text" id="numRecepteur" placeholder="Numéro">
-      <input type="text" id="nomRecepteur" placeholder="Nom">
-      <select id="fonctionRecepteur" onchange="updateService('Recepteur')">
-        <option>CEX</option><option>CEF</option><option>CCO</option>
-      </select>
-      <input type="text" id="serviceRecepteur" placeholder="Entité">
-    </fieldset>
+    <!-- Bloc Heure -->
+    <div class="field">
+      <label>Heure</label>
+      <div class="time-row">
+        <select id="heureSelect" aria-label="Heures"></select>
+        <select id="minuteSelect" aria-label="Minutes"></select>
+       button id="btnNow" class="icon-btn" type="button" title="Heure actuelle" aria-label="Heure actuelle">⟳</button>
+      </div>
+    </div>
+
+    <!-- Section ÉMETTEUR -->
+    <section id="section-emetteur">
+      <h3>Émetteur</h3>
+      <div class="grid">
+        <div class="field small">
+          <label for="numEmetteur">Numéro</label>
+          <input id="numEmetteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+        </div>
+        <div class="field">
+          <label for="nomEmetteur">Nom</label>
+          <input id="nomEmetteur" class="upper" type="text" placeholder="NOM">
+        </div>
+        <div class="field">
+          <label for="fonctionEmetteur">Fonction</label>
+          <select id="fonctionEmetteur">
+            <option value="" selected hidden></option>
+            <option value="CDC">CDC</option>
+            <option value="CDT">CDT</option>
+            <option value="CDC-CDR">CDC-CDR</option>
+            <option value="PDM">PDM</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="entiteEmetteur">Entité</label>
+          <input id="entiteEmetteur" class="upper" type="text" placeholder="ENTITÉ">
+        </div>
+      </div>
+    </section>
+
+    <!-- Section RÉCEPTEUR -->
+    <section id="section-recepteur">
+      <h3>Récepteur</h3>
+      <div class="grid">
+        <div class="field small">
+          <label for="numRecepteur">Numéro</label>
+          <input id="numRecepteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+        </div>
+        <div class="field">
+          <label for="nomRecepteur">Nom</label>
+          <input id="nomRecepteur" class="upper" type="text" placeholder="NOM">
+        </div>
+        <div class="field">
+          <label for="fonctionRecepteur">Fonction</label>
+          <select id="fonctionRecepteur">
+            <option value="" selected hidden></option>
+            <option value="CEX">CEX</option>
+            <option value="CEF">CEF</option>
+            <option value="CCO">CCO</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="entiteRecepteur">Entité</label>
+          <input id="entiteRecepteur" class="upper" type="text" placeholder="ENTITÉ">
+        </div>
+      </div>
+    </section>
 
     <!-- Message -->
-    <textarea id="message" placeholder="Message dicté"></textarea>
-    <button type="submit">Enregistrer</button>
-    <button type="button" onclick="resetForm()">Rafraîchir</button>
-  </form>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" rows="5" placeholder="Votre message (majuscules non imposées)"></textarea>
+    </div>
+  </main>
 
-  <!-- Historique -->
-  <h2>Historique des messages</h2>
-  <table id="historique">
-    <thead>
-      <tr>
-        <th>N° Émetteur</th><th>Nom Émetteur</th><th>Fonction Émetteur</th><th>Entité Émetteur</th>
-        <th>N° Récepteur</th><th>Nom Récepteur</th><th>Fonction Récepteur</th><th>Entité Récepteur</th>
-        <th>Message</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <script src="app.js"></script>
 </body>
 </html>
