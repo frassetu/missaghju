@@ -48,15 +48,21 @@
   </style>
 </head>
 <body>
-  <h2>Benvenutu à Missaghju</h2>
+  <h2>Idintificazioni</h2>
 
   <label for="nom">A vostra casata :</label>
   <input type="text" id="nom" placeholder="Casata ?" />
 
-  <label for="entite">A vostra entità :</label>
+  <label for="entite">A vostra intità :</label>
   <select id="entite">
-    <option value="BAO">BAO</option>
-    <option value="DELCO">DELCO</option>
+    <option value="-">-</option>
+    <option value="BOBA">BOBA</option>
+    <option value="BOCC">BOCC</option>
+    <option value="BOES">BOES</option>
+    <option value="BOGA">BOGA</option>
+    <option value="BOGB">BOGB</option>
+    <option value="BOGB">BOPO</option>
+    <option value="AOC">AOC</option>
   </select>
 
   <button onclick="sauvegarderInfos()">Cuntinuà</button>
@@ -67,7 +73,7 @@
       const entite = document.getElementById("entite").value;
 
       if (!nom.trim()) {
-        alert("Pà piacè, inserite u vostru nomu.");
+        alert("Pà piacè, intriti a vostra casata.");
         return;
       }
 
