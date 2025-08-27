@@ -1,74 +1,109 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9f9;
+:root{
+  --bg:#0b0b0b;
+  --fg:#ffffff;
+  --accent:#ff6600;
+  --muted:#e9e9e9;
+  --line:#dedede;
+  --card:#ffffff;
+  --text:#222;
 }
 
-header {
-  background: #ff6600;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:#f6f6f6; color:var(--text);
 }
 
-main {
-  padding: 15px;
+.app-header{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px; background:var(--bg); color:var(--fg);
+  border-bottom:3px solid var(--accent);
+}
+.brand{display:flex; gap:10px; align-items:center}
+.logo{
+  width:28px; height:28px; border-radius:6px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, #000 0 50%, #ff6600 50% 100%);
+  color:#fff; font-weight:700;
+}
+.app-header h1{font-size:18px; margin:0}
+.actions{display:flex; gap:8px; align-items:center}
+
+.container{max-width:960px; margin:0 auto; padding:16px}
+
+.field{margin-bottom:14px}
+label{display:block; font-weight:600; margin-bottom:6px}
+input,select,textarea,button{
+  font-size:16px;
+}
+input,select,textarea{
+  width:100%; padding:10px 12px; border:1px solid var(--line);
+  border-radius:10px; background:#fff;
+}
+textarea{resize:vertical}
+.hint{color:#666; font-size:12px; margin-top:4px; display:block}
+
+.upper{text-transform:uppercase}
+
+.card{
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:14px 12px; margin-bottom:14px;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.card h3{margin:0 0 12px 0; color:#111}
+
+.grid{
+  display:grid; gap:12px; grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.row-inline{display:flex; gap:8px; align-items:center}
+.time-row{display:flex; gap:8px; align-items:center}
+.btn{
+  border:1px solid var(--line); background:#fff; color:#111;
+  padding:10px 12px; border-radius:10px; cursor:pointer;
+}
+.btn:hover{background:#fafafa}
+.btn.ghost{background:#111; color:#fff; border-color:#333}
+.btn.ghost:hover{background:#1a1a1a}
+.btn.icon{width:40px; height:40px; display:grid; place-items:center; padding:0}
+.btn.primary{
+  background:var(--accent); color:#fff; border-color:transparent; font-weight:700;
+}
+.btn.primary:hover{filter:brightness(0.95)}
+
+.toolbar{
+  position:sticky; bottom:0; z-index:15;
+  display:flex; justify-content:center; gap:10px;
+  padding:10px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.04));
 }
 
-.field {
-  margin-bottom: 15px;
+.panel{
+  position:fixed; inset:0; background:#fff; z-index:100; display:flex; flex-direction:column;
+  border-top:4px solid var(--accent);
 }
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+.panel.hidden{display:none}
+.panel-header{
+  padding:12px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between;
+  background:#fafafa; border-bottom:1px solid var(--line);
 }
+.panel-actions{display:flex; gap:8px; align-items:center}
+.panel-actions input[type="search"]{min-width:220px}
+.panel-body{padding:12px; overflow:auto}
 
-input, select, textarea, button {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  box-sizing: border-box;
+.table{width:100%; border-collapse:collapse; font-size:14px}
+.table th,.table td{border:1px solid var(--line); padding:6px 8px; vertical-align:top}
+.table th{background:#f1f1f1; position:sticky; top:0}
+
+.toast{
+  position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+  background:#111; color:#fff; padding:10px 14px; border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2); z-index:200;
 }
+.toast.hidden{display:none}
 
-textarea {
-  resize: vertical;
-}
-
-input.upper {
-  text-transform: uppercase;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.field.small input {
-  max-width: 120px;
-}
-
-.time-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon-btn {
-  width: 36px;
-  height: 36px;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 6px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 720px){
+  .grid{grid-template-columns:1fr}
+  .panel-actions{width:100%}
+  .panel-actions input{flex:1}
 }
