@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Missaghju</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="theme-color" content="#FF6600" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Missaghju</h1>
+  <header class="app-header">
+    <div class="brand">
+      <!-- Icône simplifiée Corse (placeholder) -->
+      <div class="logo">⚑</div>
+      <h1>Missaghju</h1>
+    </div>
+    <nav class="actions">
+      <button id="btnHistorique" class="btn ghost" title="Voir l'historique">Historique</button>
+      <button id="btnRefresh" class="btn ghost" title="Rafraîchir la page">Rafraîchir</button>
+    </nav>
   </header>
 
-  <main>
-    <!-- Sélecteur du rôle -->
+  <main class="container">
+    <!-- Rôle -->
     <div class="field">
       <label for="roleSelect">Rôle</label>
       <select id="roleSelect">
         <option value="EMETTEUR" selected>ÉMETTEUR</option>
         <option value="RECEPTEUR">RÉCEPTEUR</option>
       </select>
+      <small class="hint">Changer le rôle inverse les champs Émetteur ⇄ Récepteur.</small>
     </div>
 
-    <!-- Bloc Heure -->
+    <!-- Heure -->
     <div class="field">
       <label>Heure</label>
       <div class="time-row">
         <select id="heureSelect" aria-label="Heures"></select>
         <select id="minuteSelect" aria-label="Minutes"></select>
-       button id="btnNow" class="icon-btn" type="button" title="Heure actuelle" aria-label="Heure actuelle">⟳</button>
+        <button id="btnNow" class="btn icon" type="button" title="Heure actuelle" aria-label="Heure actuelle">⟳</button>
       </div>
     </div>
 
-    <!-- Section ÉMETTEUR -->
-    <section id="section-emetteur">
+    <!-- ÉMETTEUR -->
+    <section id="section-emetteur" class="card">
       <h3>Émetteur</h3>
       <div class="grid">
-        <div class="field small">
+        <div class="field">
           <label for="numEmetteur">Numéro</label>
-          <input id="numEmetteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+          <div class="row-inline">
+            <input id="numEmetteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+            <button id="btnGenNumEmetteur" class="btn" type="button" title="Générer un numéro">Générer</button>
+          </div>
         </div>
         <div class="field">
           <label for="nomEmetteur">Nom</label>
@@ -60,13 +74,16 @@
       </div>
     </section>
 
-    <!-- Section RÉCEPTEUR -->
-    <section id="section-recepteur">
+    <!-- RÉCEPTEUR -->
+    <section id="section-recepteur" class="card">
       <h3>Récepteur</h3>
       <div class="grid">
-        <div class="field small">
+        <div class="field">
           <label for="numRecepteur">Numéro</label>
-          <input id="numRecepteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+          <div class="row-inline">
+            <input id="numRecepteur" class="only-digits" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="---">
+            <button id="btnGenNumRecepteur" class="btn ghost" type="button" title="Générer un numéro">Générer</button>
+          </div>
         </div>
         <div class="field">
           <label for="nomRecepteur">Nom</label>
@@ -89,12 +106,60 @@
     </section>
 
     <!-- Message -->
-    <div class="field">
-      <label for="message">Message</label>
-      <textarea id="message" rows="5" placeholder="Votre message (majuscules non imposées)"></textarea>
-    </div>
+    <section class="card">
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" rows="6" placeholder="Votre message (majuscules non imposées)"></textarea>
+      </div>
+    </section>
   </main>
 
+  <!-- Barre d'actions -->
+  <footer class="toolbar">
+    <button id="btnSave" class="btn primary">Enregistrer</button>
+  </footer>
+
+  <!-- Panneau Historique -->
+  <div id="historyPanel" class="panel hidden" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+    <div class="panel-header">
+      <h2 id="historyTitle">Historique</h2>
+      <div class="panel-actions">
+        <input id="historySearch" type="search" placeholder="Rechercher..." />
+        <button id="btnExportCsv" class="btn">Exporter CSV</button>
+        <button id="btnCloseHistory" class="btn ghost">Fermer</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table class="table" id="historyTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Rôle</th>
+            <th>N° Émetteur</th>
+            <th>Nom Émetteur</th>
+            <th>Fonction Émetteur</th>
+            <th>Entité Émetteur</th>
+            <th>N° Récepteur</th>
+            <th>Nom Récepteur</th>
+            <th>Fonction Récepteur</th>
+            <th>Entité Récepteur</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody><!-- rempli par JS --></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
   <script src="app.js"></script>
+  <script>
+    // Enregistrer le service worker PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>
