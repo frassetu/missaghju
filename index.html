@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missaghju</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>Missaghju</h1>
+  <form id="messageForm">
+    <!-- Heure et rôle -->
+    <fieldset>
+      <legend>Heure et rôle</legend>
+      <input type="number" id="heure" placeholder="Heures" min="0" max="23">
+      <input type="number" id="minute" placeholder="Minutes" min="0" max="59">
+      <button type="button" onclick="setCurrentTime()">Actualiser l'heure</button>
+      <select id="role">
+        <option>Émetteur</option>
+        <option>Récepteur</option>
+      </select>
+    </fieldset>
+
+    <!-- Émetteur -->
+    <fieldset>
+      <legend>Émetteur</legend>
+      <input type="text" id="numEmetteur" placeholder="Numéro">
+      <button type="button" onclick="generateNumber()">Générer numéro</button>
+      <input type="text" id="nomEmetteur" placeholder="Nom">
+      <select id="fonctionEmetteur" onchange="updateService('Emetteur')">
+        <option>CDC</option><option>CDT</option><option>CDC-CDR</option>
+        <option>PDM</option><option>PDA</option><option>PDE</option><option>PDS</option>
+      </select>
+      <input type="text" id="serviceEmetteur" placeholder="Entité">
+    </fieldset>
+
+    <!-- Récepteur -->
+    <fieldset>
+      <legend>Récepteur</legend>
+      <input type="text" id="numRecepteur" placeholder="Numéro">
+      <input type="text" id="nomRecepteur" placeholder="Nom">
+      <select id="fonctionRecepteur" onchange="updateService('Recepteur')">
+        <option>CEX</option><option>CEF</option><option>CCO</option>
+      </select>
+      <input type="text" id="serviceRecepteur" placeholder="Entité">
+    </fieldset>
+
+    <!-- Message -->
+    <textarea id="message" placeholder="Message dicté"></textarea>
+    <button type="submit">Enregistrer</button>
+    <button type="button" onclick="resetForm()">Rafraîchir</button>
+  </form>
+
+  <!-- Historique -->
+  <h2>Historique des messages</h2>
+  <table id="historique">
+    <thead>
+      <tr>
+        <th>N° Émetteur</th><th>Nom Émetteur</th><th>Fonction Émetteur</th><th>Entité Émetteur</th>
+        <th>N° Récepteur</th><th>Nom Récepteur</th><th>Fonction Récepteur</th><th>Entité Récepteur</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</body>
+</html>
