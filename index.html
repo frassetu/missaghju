@@ -21,6 +21,15 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <script>
+  const nom = localStorage.getItem("nomUtilisateur");
+  const entite = localStorage.getItem("entiteUtilisateur");
+
+  // Si les infos ne sont pas enregistrées, rediriger vers la page d'identification
+  if (!nom || !entite) {
+    window.location.href = "idintificazioni.html";
+  }
+</script>
   <header class="app-header">
     <div class="brand">
       <div class="logo">⚑</div>
@@ -182,4 +191,5 @@
   </script>
 </body>
 </html>
+
 
