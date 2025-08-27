@@ -1,2 +1,0 @@
-# missaghju
-Quaternu di missaghji
