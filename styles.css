@@ -6,7 +6,29 @@
   --card:#ffffff;
   --text:#222;
 }
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
 
+.flex-row > * {
+  flex: 1;
+  min-width: 100px;
+}
+
+@media (max-width: 600px) {
+  .flex-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .flex-row > * {
+    flex: none;
+    width: auto;
+  }
+}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -108,3 +130,4 @@ textarea{resize:vertical}
   .panel-actions{width:100%}
   .panel-actions input{flex:1}
 }
+
