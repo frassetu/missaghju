@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="co">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idintificazioni</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fff;
+      color: #000;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #ff6600;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #000;
+      color: #ff6600;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>Benvenutu à Missaghju</h2>
+
+  <label for="nom">A vostra casata :</label>
+  <input type="text" id="nom" placeholder="Casata ?" />
+
+  <label for="entite">A vostra entità :</label>
+  <select id="entite">
+    <option value="BAO">BAO</option>
+    <option value="DELCO">DELCO</option>
+  </select>
+
+  <button onclick="sauvegarderInfos()">Cuntinuà</button>
+
+  <script>
+    function sauvegarderInfos() {
+      const nom = document.getElementById("nom").value.toUpperCase();
+      const entite = document.getElementById("entite").value;
+
+      if (!nom.trim()) {
+        alert("Pà piacè, inserite u vostru nomu.");
+        return;
+      }
+
+      localStorage.setItem("nomUtilisateur", nom);
+      localStorage.setItem("entiteUtilisateur", entite);
+      window.location.href = "index.html"; // redirection vers la page principale
+    }
+  </script>
+</body>
+</html>
